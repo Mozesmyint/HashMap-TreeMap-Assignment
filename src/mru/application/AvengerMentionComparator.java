@@ -1,4 +1,4 @@
-package src;
+package mru.application;
 
 
 import java.util.Comparator;
