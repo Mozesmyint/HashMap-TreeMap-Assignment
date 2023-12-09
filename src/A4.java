@@ -2,9 +2,11 @@ package src;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 
 /**
  * COMP 2503 Fall 2023 Assignment 4
@@ -160,26 +162,48 @@ public class A4 {
 		
 		
 		System.out.println("Total number of words: " + totalwordcount);
-		//System.out.println("Number of Avengers Mentioned: " + ??);
+		System.out.println("Number of Avengers Mentioned: " + mentionMap.size());
 		System.out.println();
 
 		System.out.println("All avengers in the order they appeared in the input stream:");
 		// Todo: Print the list of avengers in the order they appeared in the input
 		// Make sure you follow the formatting example in the sample output
+		printMap(mentionMap);
 		System.out.println();
 
 		System.out.println("Top " + topN + " most popular avengers:");
 		// Todo: Print the most popular avengers, see the instructions for tie breaking
 		// Make sure you follow the formatting example in the sample output
+		printTopN(mostPopularAvenger);
 		System.out.println();
 
 		System.out.println("Top " + topN + " most popular performers:");
 		// Todo: Print the most popular performer, see the instructions for tie breaking
 		// Make sure you follow the formatting example in the sample output
+		printTopN(mostPopularPerformer);
 		System.out.println();
 
 		System.out.println("All mentioned avengers in alphabetical order:");
 		// Todo: Print the list of avengers in alphabetical order
+		printMap(alphabticalMap);
 		System.out.println();
+	}
+
+	private void printMap(TreeMap<Avenger, String> Map) {
+		for(Map.Entry<Avenger, String> e : Map.entrySet()) {
+			System.out.println(e.getKey());
+		}
+	}
+	
+	private void printTopN(TreeMap<Avenger, String> Map) {
+		Iterator<Entry<Avenger, String>> i = Map.entrySet().iterator();
+		int count = 0;
+		
+		while(i.hasNext() && count < topN) {
+			Map.Entry<Avenger, String> e = i.next();
+			System.out.println(e.getKey());
+			
+			count++;
+		}
 	}
 }
