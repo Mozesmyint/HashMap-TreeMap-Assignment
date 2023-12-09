@@ -1,10 +1,8 @@
 
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.Collection;
 
 /**
  * COMP 2503 Fall 2023 Assignment 4
@@ -30,16 +28,12 @@ public class A4 {
 	private int totalwordcount = 0;
 	private Scanner input = new Scanner(System.in);
 
-	/* TODO:
-	 * Create the necessary hashMap and treeMap objects to keep track of the Avenger objects 
-	 * Remember that a hashtable does not keep any inherent ordering for its contents.
-	 * But for this assignment we want to be able to create the sorted lists of avenger objects.
-	 * Use TreeMap objects (which are binary search trees, and hence have an
-	 * ordering) for creating the following orders: alphabetical, mention order, most popular avenger, and most popular performer
-	 * The alphabetical order TreeMap must be constructed with the natural order of the Avenger objects.
-	 * The other three orderings must be created by passing the corresponding Comparators to the 
-	 * TreeMap constructor. 
-	 */
+	HashMap<Avenger, String> hMap = new HashMap<Avenger, String>();
+	
+	TreeMap<Avenger, Integer> alphabticalMap = new TreeMap<Avenger, Integer>(Comparator.naturalOrder());
+	TreeMap<Avenger, Integer> mentionMap = new TreeMap<Avenger, Integer>(new AvengerMentionComparator());
+	TreeMap<Avenger, Integer> mostPopularAvenger = new TreeMap<Avenger, Integer>(new AvengerComparator());
+	TreeMap<Avenger, Integer> mostPopularPerformer = new TreeMap<Avenger, Integer>(new PerformerComparator());
 	
 	public static void main(String[] args) {
 		A4 a4 = new A4();
