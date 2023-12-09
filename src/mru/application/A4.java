@@ -16,7 +16,7 @@ import java.util.Map.Entry;
  * for keeping track of the Avenger Objects, and it must use TreeMaps
  * for storing the data. 
  * 
- * @author Maryam Elahi
+ * @author Maryam Elahi and Mozes Aung
  * @date Fall 2023
  */
 
@@ -39,17 +39,28 @@ public class A4 {
 	TreeMap<Avenger, String> mostPopularAvenger = new TreeMap<Avenger, String>(new AvengerComparator());
 	TreeMap<Avenger, String> mostPopularPerformer = new TreeMap<Avenger, String>(new PerformerComparator());
 	
+	/**
+	 * Main method to start the program
+	 */
 	public static void main(String[] args) {
 		A4 a4 = new A4();
 		a4.run();
 	}
 
+	/**
+	 * runs the program by calling methods to first read input and then
+	 * call an ordering method and finally the print method
+	 */
 	public void run() {
 		readInput();
 		createdOrderedTreeMaps();
 		printResults();
 	}
 
+	/**
+	 * Iterates through the hashmap and adds them into the corresponding treemaps
+	 * which use different ordering through the comparators that were initialized earlier
+	 */
 	private void createdOrderedTreeMaps() {
 		for(Avenger a : hMap.keySet()) {
 			alphabticalMap.put(a, hMap.get(a));
@@ -73,19 +84,30 @@ public class A4 {
 				updateAvengerMap(word);
 			}
 		}
-
 	}
 	
+	/**
+	 * Reads the given parameter and checks if it matches with the given roster array
+	 * to then add the name or if it already exists in the hashmap add to the 
+	 * corresponding frequency
+	 * @param word
+	 */
 	private void updateAvengerMap(String word) {
+		//Iterate through the given roster to check for matches
 		for(int i = 0; i < avengerRoster.length; i++) {
 			if(word.equals(avengerRoster[i][0]) || word.equals(avengerRoster[i][1]) || word.equals(avengerRoster[i][2])) {
+				
+				//Create an object with the matching word
 				Avenger newA = new Avenger();
 				newA.setHeroAlias(avengerRoster[i][0]);
 				newA.setHeroName(avengerRoster[i][1]);
 				newA.setPerformer(avengerRoster[i][2]);
 				
+				//Check if the Avenger exists in the hashmap
 				Avenger a = findA(word);
 				
+				//If the search returns null then it means it already exists in the hashmap
+				//therefore we add in frequency depending on the given parameter match
 				if(a != null) {
 					if(word.equals(avengerRoster[i][0]))
 						a.setAliasFreq(a.getAliasFreq() + 1);
@@ -94,7 +116,7 @@ public class A4 {
 					else if(word.equals(avengerRoster[i][2]))
 						a.setPerformerFreq(a.getPerformerFreq() + 1);
 				} 
-				// if null it will create a new member on the list 
+				//If null it will create a new member on the list 
 				else {
 					a = newA;
 					
@@ -105,14 +127,17 @@ public class A4 {
                     else if (word.equals(avengerRoster[i][2])) 
                     	a.setPerformerFreq(1);
                     
-                    //creates an index to easily search on the list 
-                    a.setMentionOrder(hMap.size() + 1);
                     hMap.put(a, a.getHeroAlias());					
 				}
 			}
 		}
 	}
 
+	/**
+	 * Iterates through the hashmap and matches with an existing avenger otherwise return null
+	 * @param a
+	 * @return
+	 */
 	private Avenger findA(String a) {
 		for(Map.Entry<Avenger, String> e : hMap.entrySet()) {
 			Avenger foundA = e.getKey();
@@ -147,54 +172,44 @@ public class A4 {
 	 * print the results
 	 */
 	private void printResults() {
-		/*
-		 * Please first read the documentation for TreeMap to see how to 
-		 * iterate over a TreeMap data structure in Java.
-		 *  
-		 * Hint for printing the required list of avenger objects:
-		 * Note that the TreeMap class does not implement
-		 * the Iterable interface at the top level, but it has
-		 * methods that return Iterable objects.
-		 * You must either create an iterator over the 'key set',
-		 * or over the values 'collection' in the TreeMap.
-		 * 
-		 */
-		
-		
+		//Prints the total number of words after being cleaned of numbers or special characters
 		System.out.println("Total number of words: " + totalwordcount);
+		//Prints the number of avengers mentioned through the size of the TreeMap due to duplicates counting as frequency
 		System.out.println("Number of Avengers Mentioned: " + mentionMap.size());
 		System.out.println();
 
+		//Prints each list through the given comparator on initialization
 		System.out.println("All avengers in the order they appeared in the input stream:");
-		// Todo: Print the list of avengers in the order they appeared in the input
-		// Make sure you follow the formatting example in the sample output
 		printMap(mentionMap);
 		System.out.println();
 
 		System.out.println("Top " + topN + " most popular avengers:");
-		// Todo: Print the most popular avengers, see the instructions for tie breaking
-		// Make sure you follow the formatting example in the sample output
 		printTopN(mostPopularAvenger);
 		System.out.println();
 
 		System.out.println("Top " + topN + " most popular performers:");
-		// Todo: Print the most popular performer, see the instructions for tie breaking
-		// Make sure you follow the formatting example in the sample output
 		printTopN(mostPopularPerformer);
 		System.out.println();
 
 		System.out.println("All mentioned avengers in alphabetical order:");
-		// Todo: Print the list of avengers in alphabetical order
 		printMap(alphabticalMap);
 		System.out.println();
 	}
 
+	/**
+	 * Takes a list and prints without a limit
+	 * @param Map
+	 */
 	private void printMap(TreeMap<Avenger, String> Map) {
 		for(Map.Entry<Avenger, String> e : Map.entrySet()) {
 			System.out.println(e.getKey());
 		}
 	}
 	
+	/**
+	 * Takes a list and loops until the count reaches the given topN
+	 * @param Map
+	 */
 	private void printTopN(TreeMap<Avenger, String> Map) {
 		Iterator<Entry<Avenger, String>> i = Map.entrySet().iterator();
 		int count = 0;
