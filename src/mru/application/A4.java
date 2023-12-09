@@ -127,6 +127,7 @@ public class A4 {
                     else if (word.equals(avengerRoster[i][2])) 
                     	a.setPerformerFreq(1);
                     
+                    a.setMentionOrder(hMap.size() + 1);
                     hMap.put(a, a.getHeroAlias());					
 				}
 			}
